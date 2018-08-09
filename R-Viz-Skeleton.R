@@ -373,24 +373,13 @@ nh %>%
 #   Custom colors are "salmon" and "seagreen"
 nh %>% 
   ggplot(aes(x = RelationshipStatus, y = AlcoholYear)) +
-  geom_point() + #add transparency with alpha +
+  geom_boxplot(aes(fill = Gender)) + 
+  scale_fill_manual(values = c("seagreen", "salmon"))
 
-nh %>% 
-  filter(Age>=18) %>% 
-  filter(!is.na(Height) & !is.na(Race)) %>%
-  ggplot(aes(x = Race, y = Height)) +
-  geom_boxplot(aes(fill = Gender), alpha = 0.5)
-
-# Plotting univariate continuous data -------
-nh %>% 
-  ggplot(aes(Height))
-  
 #   C. 
-  nh %>% 
-  filter(!is.na(SmokingStatus)) %>% 
-  ggplot(aes(x = SmokingStatus, y = BMI)) +
-  geom_boxplot(aes(fill = Diabetes)) +
-  scale_fill_manual(values = c("cornflowerblue", "salmon")) +
-  theme_minimal() + 
-  geom_density(aes(color = Race)) +
-  facet_wrap(~Race)
+nh %>% 
+  filter(Age<18) %>% 
+  filter(!is.na(Height) & !is.na(Race) & !is.na(Age)) %>%
+  ggplot(aes(x = Age, y = Height, color = Gender)) +
+  facet_wrap(~Race) +
+  geom_smooth(aes())
