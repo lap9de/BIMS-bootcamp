@@ -43,45 +43,66 @@ dim(nh)
 
 # Let's use filter to return rows where the person was elderly (defined as >= 80 years old)
 
-
+filter(nh, Age >= 80)
+filter(nh, Age == 80)
 
 # Using the pipe -----
 # `%>%` or `Control + Shift + M` 
 
 # `head()` without pipe
-
+head(nh, 8)
 
 # `head()` with pipe
-
+nh %>% head(8)
 
 # Now let's use the pipe operator with filter to subset for elderly people >= 80 years old
 # without pipe
-
+filter(nh, Age >= 80)
 
 # with pipe
-
+nh %>% filter(Age >=80)
 
 # Nesting v. %>% ----------
 
 # Let's say we want to see the mean height, grouped by Race, only for adults.
 # without pipe
-
+summarise(group_by(filter(nh, Age >= 18), Race), meanHeight = mean(Height, na.rm = TRUE) )
 
 # with pipe
-
+nh %>% 
+  filter(Age >=18) %>% 
+  group_by(Race) %>% 
+  summarise(meanHeight = mean(Height, na.rm = TRUE))
 
 # with pipe arranged in order
+nh %>% 
+  filter(Age >=18) %>% 
+  group_by(Race) %>% 
+  summarise(meanHeight = mean(Height, na.rm = TRUE)) %>% 
+  arrange(meanHeight)
+
+nh %>% 
+  filter(Age >=18) %>% 
+  group_by(Race) %>% 
+  summarise(meanHeight = mean(Height, na.rm = TRUE)) %>% 
+  arrange(desc(meanHeight))
 
 
 # ** EXERCISE 1 ** ------------
 # ** YOUR TURN **
 #   A. How many observations are there of children (< 18 years old)?
- 
+nh %>% 
+ count(Age <18)
 #   B. How many cases of obese children are there (BMI >= 30)?
-
+nh %>% 
+  count(BMI >= 30)
 
 #   C. Use `filter()`, `group_by()` and `summarize()` to find the mean BMI by Smoking Status for only Adults who have Diabetes. Do diabetic smokers or non-smokers have higher BMI?
-
+nh %>% 
+  filter(Diabetes == "Yes") %>% 
+  group_by(SmokingStatus) %>% 
+  summarise(meanBMI = mean(BMI, na.rm = TRUE)) %>% 
+  arrange(desc(meanBMI))
 
 # ggplot2 ---------
 
