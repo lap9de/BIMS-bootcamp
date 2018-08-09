@@ -1,18 +1,23 @@
 
 # Load library -----
-
+library(tidyverse)
 
 # Download data and skeleton script from GitHub into project -----
- 
+
 # Go to GitHub [repo](https://github.com/mariekekjones/BIMS-bootcamp) to get these materials
 
 # NHANES data ----
+nh <- read_csv("nhanes.csv")
+View(nh)
 
 # Read in downloaded data using `read_csv()` from {readr} package
 
 
 # Show the first few lines of the data and the dimensions
+head(nh)
+head(nh, 16)
 
+dim(nh)
 
 # Optionally bring up data in a viewer window.
 
